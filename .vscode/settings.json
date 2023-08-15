@@ -23,7 +23,7 @@
     },
   
     "autoDocstring.docstringFormat": "google-notypes",
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "off",
     "files.exclude": {
       "**/node_modules": true,
       "**/.git": true,
