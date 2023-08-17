@@ -4,6 +4,7 @@
 # https://www.twilio.com/blog/ultimate-guide-openai-gpt-3-language-model"""
 import os
 from typing import Text, List, Union, Dict
+import requests
 import openai
 import langchain
 from constants import GPT_3DOT5_TURBO
@@ -28,12 +29,22 @@ def get_chat_completion(prompt: Union[Text, List[Dict]], model=GPT_3DOT5_TURBO):
     else:
         messages = prompt
     response = openai.ChatCompletion.create(
-        url='https://api.openai.com/v1/chat/completions',
+
         model=model,
         messages=messages,
         temperature=0,  # this is the degree of randomness of the model's output
     )
+
     return response.choices[0].message["content"]
+
+
+def get_response_from_post(messages, model=GPT_3DOT5_TURBO):
+    # this url works for
+    url = 'https://api.openai.com/v1/chat/completions'
+    headers = {"Authorization": f"Bearer {openai.api_key}"}
+    data = {"model": model, "messages": messages}
+    response = requests.post(url, headers=headers, json=data).json()
+    return response
 
 
 if __name__ == "__main__":
